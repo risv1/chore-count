@@ -1,0 +1,10 @@
+^C:\USERS\RISHI\ONEDRIVE\DESKTOP\FLUTTER_PROJECTS\CHORE-COUNT\APP\BUILD\WINDOWS\X64\CMAKEFILES\D7F0B2DEE93F8CE4FA93BEDFAB9B796E\GENERATE.STAMP.RULE
+setlocal
+"C:\Program Files (x86)\Microsoft Visual Studio\2019\BuildTools\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\bin\cmake.exe" -SC:/Users/Rishi/OneDrive/Desktop/flutter_projects/chore-count/app/windows -BC:/Users/Rishi/OneDrive/Desktop/flutter_projects/chore-count/app/build/windows/x64 --check-stamp-list CMakeFiles/generate.stamp.list --vs-solution-file C:/Users/Rishi/OneDrive/Desktop/flutter_projects/chore-count/app/build/windows/x64/app.sln
+if %errorlevel% neq 0 goto :cmEnd
+:cmEnd
+endlocal & call :cmErrorLevel %errorlevel% & goto :cmDone
+:cmErrorLevel
+exit /b %1
+:cmDone
+if %errorlevel% neq 0 goto :VCEnd
