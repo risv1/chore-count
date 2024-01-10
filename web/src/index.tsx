@@ -6,12 +6,24 @@ import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import Login from "./pages/Login";
 import Chores from "./pages/Chores";
 import NewChore from "./components/NewChore";
+import Home from "./pages/Home";
+import Description from "./components/home/Description";
 
 const router = createBrowserRouter([
   {
     path: "/",
     element: <App />,
     children: [
+      {
+        path: "/home",
+        element: <Home />,
+        children: [
+          {
+            index: true,
+            element: <Description />
+          }
+        ]
+      },
       {
         path: "/login",
         element: <Login />,

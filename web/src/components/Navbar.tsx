@@ -39,7 +39,7 @@ const Navbar = () => {
 
     return (
         <nav className="fixed h-20 w-screen flex flex-row items-center bg-indigo-700">
-            <Link to={"/"} className="text-white font-bold text-2xl p-10">Chore<span className="text-sky-400">Count</span></Link>
+            <Link to={"/home"} className="text-white font-bold text-2xl p-10">Chore<span className="text-sky-400">Count</span></Link>
             {session === null ? (
                 <button className="ml-auto mr-10 p-2 rounded-2xl text-white text-base font-bold bg-green-500" onClick={() => handleRoute("/login")}>Sign in</button>
             ) : (
