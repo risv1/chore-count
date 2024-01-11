@@ -1,25 +1,11 @@
 import { useEffect, useState } from "react";
-import { supabase } from "../../lib/supabase";
 import { useNavigate } from "react-router";
-import { Session } from "@supabase/supabase-js"; 
+import { useSession } from "../../SessionContext";
 
 const Description = () => {
     
   const navigate = useNavigate();
-  const [session, setSession] = useState<Session | null>(null);
-
-  const getUser = async () => {
-    const { data: userSession, error } = await supabase.auth.getSession();
-    if (error) {
-      console.log("User not logged in");
-    } else {
-      setSession(userSession.session || null);
-    }
-  };
-
-  useEffect(() => {
-    getUser();
-  }, []);
+  const { session, updateSession } = useSession();
 
   const handleRoute = (route: string) => {
     navigate(route);

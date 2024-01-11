@@ -1,16 +1,16 @@
 import { useNavigate } from "react-router";
-import Modal from "./wrapper/Modal";
+import Modal from "../wrapper/Modal";
 
 const NewChore = () => {
   const navigate = useNavigate();
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    navigate("/chores")
+    navigate("..")
   };
 
   const handleClose = () => {
-    navigate("/chores");
+    navigate("..");
   };
 
   return (

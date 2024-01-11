@@ -5,29 +5,17 @@ import App from "./App";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import Login from "./pages/Login";
 import Chores from "./pages/Chores";
-import NewChore from "./components/NewChore";
-import Home from "./pages/Home";
+import NewChore from "./components/chores/NewChore";
 import Description from "./components/home/Description";
+import { SessionProvider } from "./SessionContext";
+import Profile from "./pages/Profile";
 
 const router = createBrowserRouter([
   {
     path: "/",
     element: <App />,
     children: [
-      {
-        path: "/home",
-        element: <Home />,
-        children: [
-          {
-            index: true,
-            element: <Description />
-          }
-        ]
-      },
-      {
-        path: "/login",
-        element: <Login />,
-      },
+      {index: true, element: <Description />},
       {
         path: "/chores",
         element: <Chores />,
@@ -40,6 +28,14 @@ const router = createBrowserRouter([
       },
     ],
   },
+  {
+    path: "/login",
+    element: <Login />,
+  },
+  {
+    path: "/profile",
+    element: <Profile />
+  },
 ]);
 
 const root = ReactDOM.createRoot(
@@ -48,6 +44,8 @@ const root = ReactDOM.createRoot(
 
 root.render(
   <React.StrictMode>
-    <RouterProvider router={router} />
+    <SessionProvider>
+      <RouterProvider router={router} />
+    </SessionProvider>
   </React.StrictMode>
 );
