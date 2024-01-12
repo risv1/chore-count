@@ -8,11 +8,14 @@ const App = () => {
   const { session, updateUser } = useSession();
 
   useEffect(() => {
+   const checkUser = async() => { 
     if (session) {
       auth.onAuthStateChanged((currentUser) => {
         updateUser(currentUser || undefined);
       });
     }
+  }
+  checkUser()
   }, [session]);
 
 

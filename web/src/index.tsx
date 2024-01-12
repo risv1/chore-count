@@ -9,6 +9,7 @@ import NewChore from "./components/chores/NewChore";
 import Description from "./components/home/Description";
 import { SessionProvider } from "./SessionContext";
 import Profile from "./pages/Profile";
+import DayChores from "./components/chores/DayChores";
 
 const router = createBrowserRouter([
   {
@@ -24,6 +25,10 @@ const router = createBrowserRouter([
             path: "new-chore",
             element: <NewChore />,
           },
+          {
+            path: ":day",
+            element: <DayChores />
+          }
         ],
       },
     ],

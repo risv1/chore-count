@@ -1,53 +1,58 @@
 import { useEffect, useState } from "react";
 import Chore from "../components/chores/Chore";
-import { Outlet, useNavigate } from "react-router";
+import { Outlet, useLocation, useNavigate } from "react-router";
 import { collection, getDocs, query, where } from "firebase/firestore";
 import { db } from "../lib/config";
 import { useSession } from "../SessionContext";
-
-type ChoreType = {
-  id: string;
-  name: string;
-  date: string;
-};
+import { ChoreType } from "../components/chores/DayChores";
 
 const Chores = () => {
   const [chores, setChores] = useState<ChoreType[]>([]);
+  const [loading, setLoading] = useState(true);
   const navigate = useNavigate();
-  const { user } = useSession();
-  
+  const { session, user } = useSession();
+  const location = useLocation();
+
   const handleNewChore = () => {
     navigate("/chores/new-chore");
   };
 
   const getPosts = async () => {
-
     if (!user || !user.uid) {
       console.log("User not found");
       return;
     }
-  
-    const q = query(collection(db, "chores"), where("user_id", "==", user.uid));
-    const querySnapshot = await getDocs(q);
-  
-    const newChores: ChoreType[] = [];
-  
-    querySnapshot.forEach((doc) => {
-      newChores.push({
-        id: doc.id,
-        name: doc.data().name,
-        date: doc.data().day,
-      });
-    });
-  
-    setChores(newChores);
-  };
-  
 
-  useEffect(()=>{
-    getPosts()
-  }, [])
-  
+    let q = query(collection(db, "chores"), where("user_id", "==", user.uid));
+
+    try {
+      const querySnapshot = await getDocs(q);
+
+      const newChores: ChoreType[] = [];
+
+      querySnapshot.forEach((doc) => {
+        newChores.push({
+          id: doc.id,
+          name: doc.data().name,
+          date: doc.data().day,
+        });
+      });
+
+      setChores(newChores);
+    } catch (error) {
+      console.error("Error fetching chores:", error);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  useEffect(() => {
+    if (!session) {
+      navigate("/login");
+    } else {
+      getPosts();
+    }
+  }, [session]);
 
   return (
     <div className="w-full h-full flex flex-col justify-center items-center">
@@ -55,11 +60,16 @@ const Chores = () => {
         <div className="p-8 w-96 flex flex-col gap-3">
           <h1 className="text-white text-3xl font-bold mb-3">Chores:</h1>
           <div className="flex flex-col gap-3 overflow-y-scroll max-h-72">
-            {chores.map((chore) => (
-              <div>
-                <Chore key={chore.id} name={chore.name} date={chore.date} />
-              </div>
-            ))}
+            {loading ? (
+              <div className="text-white text-xl">Loading...</div>
+            ) : (
+              location.pathname === "/chores" &&
+              chores.map((chore) => (
+                <div key={chore.id}>
+                  <Chore name={chore.name} date={chore.date} />
+                </div>
+              ))
+            )}
           </div>
           <Outlet />
         </div>

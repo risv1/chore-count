@@ -59,6 +59,14 @@ const NewChore = () => {
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
+    const validDays = ["sunday", "monday", "tuesday", "wednesday", "thursday", "friday", "saturday"];
+  const enteredDay = data.day.toLowerCase();
+
+  if (!validDays.includes(enteredDay)) {
+    console.error("Invalid day entered. Please enter a valid day of the week.");
+    alert("Invalid day entered. Please enter a valid day of the week.")
+    return;
+  }
     addPost()
     navigate("..");
   };

@@ -23,7 +23,7 @@ const Login = () => {
   return (
     <>
       {session ? (
-        navigate("profile")
+        navigate("/profile")
       ) : (
         <>
           <Navbar />
