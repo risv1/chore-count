@@ -1,20 +1,10 @@
 import { useNavigate } from "react-router";
 import { useSession } from "../SessionContext";
-import Navbar from "../components/Navbar";
-import { useEffect } from "react";
-import { auth } from "../lib/config";
+import Navbar from "../components/nav/Navbar";
 
 const Profile = () => {
-  const { session, user, updateUser } = useSession();
+  const { session, user } = useSession();
   const navigate = useNavigate();
-
-  useEffect(() => {
-    if (session) {
-      auth.onAuthStateChanged((currentUser) => {
-        updateUser(currentUser || undefined);
-      });
-    }
-  }, [session]);
 
   const handleLogout = async () => {
     localStorage.clear();
@@ -37,12 +27,22 @@ const Profile = () => {
                     <div className="flex justify-center flex-row">
                       <div className="flex justify-center mr-auto flex-col">
                         <div className="flex justify-start  flex-col text-white h-full text-2xl font-bold">
-                          <h1 className="mb-8">Name: <span className="ml-5 text-green-400">{user.displayName}</span></h1>
-                          <h1 className="mb-8">Email: <span className="ml-5 text-green-400">{user.email}</span></h1>
+                          <h1 className="mb-8">
+                            Name:{" "}
+                            <span className="ml-5 text-green-400">
+                              {user.displayName}
+                            </span>
+                          </h1>
+                          <h1 className="mb-8">
+                            Email:{" "}
+                            <span className="ml-5 text-green-400">
+                              {user.email}
+                            </span>
+                          </h1>
                         </div>
-                        <div className="flex justify-center">
+                        <div className="flex justify-center flex-row gap-2">
                           <button
-                            className="bg-red-500 mt-auto w-2/3 h-12 text-white text-2xl shadow-md font-bold hover:shadow-red-400 hover:bg-red-700 rounded-xl duration-150 ease-in"
+                            className="bg-red-500 mt-auto w-1/2 h-12 text-white text-2xl shadow-md font-bold hover:shadow-red-400 hover:bg-red-700 rounded-xl duration-150 ease-in"
                             onClick={handleLogout}
                           >
                             Sign Out
@@ -50,7 +50,14 @@ const Profile = () => {
                         </div>
                       </div>
                       <div className="ml-auto">
-                        {user && <img src={user.photoURL!} alt="Loading..." style={{ borderRadius: "50%" }} className="shadow-lg shadow-sky-400" />}
+                        {user && (
+                          <img
+                            src={user.photoURL!}
+                            alt="Loading..."
+                            style={{ borderRadius: "50%" }}
+                            className="shadow-lg shadow-sky-400"
+                          />
+                        )}
                       </div>
                     </div>
                   ) : (

@@ -15,8 +15,10 @@ const Home = () => {
           <div className="w-1/3 flex items-center rounded-2xl justify-center">
             <PageNav />
           </div>
-          <div className="w-2/3 rounded-2xl bg-indigo-700 flex ml-auto items-center justify-center">
-            <DaysGrid />
+          <div className="w-2/3 rounded-2xl flex ml-auto items-center justify-center">
+            <div className="bg-indigo-700 p-16 mr-5 rounded-2xl">
+              <DaysGrid />
+            </div>
           </div>
         </div>
       </div>

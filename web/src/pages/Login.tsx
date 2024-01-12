@@ -3,7 +3,7 @@ import { auth, provider } from "../lib/config";
 import { signInWithPopup } from "firebase/auth";
 import { useNavigate } from "react-router";
 import { useSession } from "../SessionContext";
-import Navbar from "../components/Navbar";
+import Navbar from "../components/nav/Navbar";
 
 const Login = () => {
   const { session, updateSession } = useSession();
@@ -23,7 +23,7 @@ const Login = () => {
   return (
     <>
       {session ? (
-        navigate("/")
+        navigate("profile")
       ) : (
         <>
           <Navbar />

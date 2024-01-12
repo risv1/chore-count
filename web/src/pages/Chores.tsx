@@ -1,32 +1,53 @@
 import { useEffect, useState } from "react";
 import Chore from "../components/chores/Chore";
 import { Outlet, useNavigate } from "react-router";
+import { collection, getDocs, query, where } from "firebase/firestore";
+import { db } from "../lib/config";
+import { useSession } from "../SessionContext";
 
 type ChoreType = {
-  id: number;
+  id: string;
   name: string;
   date: string;
 };
 
 const Chores = () => {
   const [chores, setChores] = useState<ChoreType[]>([]);
-
   const navigate = useNavigate();
-
-  useEffect(() => {
-    const tasks = [
-      { id: 1, name: "Hello", date: "09-01-2024" },
-      { id: 2, name: "Hello There", date: "10-01-2024" },
-      { id: 2, name: "Hello There", date: "10-01-2024" },
-      { id: 2, name: "Hello There", date: "10-01-2024" },
-    ];
-
-    setChores(tasks);
-  }, []);
-
+  const { user } = useSession();
+  
   const handleNewChore = () => {
     navigate("/chores/new-chore");
   };
+
+  const getPosts = async () => {
+
+    if (!user || !user.uid) {
+      console.log("User not found");
+      return;
+    }
+  
+    const q = query(collection(db, "chores"), where("user_id", "==", user.uid));
+    const querySnapshot = await getDocs(q);
+  
+    const newChores: ChoreType[] = [];
+  
+    querySnapshot.forEach((doc) => {
+      newChores.push({
+        id: doc.id,
+        name: doc.data().name,
+        date: doc.data().day,
+      });
+    });
+  
+    setChores(newChores);
+  };
+  
+
+  useEffect(()=>{
+    getPosts()
+  }, [])
+  
 
   return (
     <div className="w-full h-full flex flex-col justify-center items-center">
