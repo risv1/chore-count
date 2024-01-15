@@ -13,37 +13,35 @@ dist-ssr
 *.local
 .env.local
 
-build
+# Learn more https://docs.github.com/en/get-started/getting-started-with-git/ignoring-files
 
-# Editor directories and files
-.vscode/*
-!.vscode/extensions.json
-.idea
+# Expo
+.expo/
+dist/
+web-build/
+
+# Native
+*.orig.*
+*.jks
+*.p8
+*.p12
+*.key
+*.mobileprovision
+
+# Metro
+.metro-health-check*
+
+# debug
+npm-debug.*
+yarn-debug.*
+yarn-error.*
+
+# macOS
 .DS_Store
-*.suo
-*.ntvs*
-*.njsproj
-*.sln
-*.sw?
+*.pem
 
-# Flutter/Dart/Pub related
-**/doc/api/
-**/ios/Flutter/.last_build_id
-.dart_tool/
-.flutter-plugins
-.flutter-plugins-dependencies
-.pub-cache/
-.pub/
-/build/
+# local env files
+.env*.local
 
-# Symbolication related
-app.*.symbols
-app.iml
-
-# Obfuscation related
-app.*.map.json
-
-# Android Studio will place build artifacts here
-/android/app/debug
-/android/app/profile
-/android/app/release
+# typescript
+*.tsbuildinfo
